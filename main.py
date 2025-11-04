@@ -1,10 +1,11 @@
 from fastapi import FastAPI
-from routers import device
+from routers import device,link
 from db.session import engine
 from db.base import Base
+from models import device,link
 
 # Create tables
-Base.metadata.create_all(bind=engine)
+#Base.metadata.create_all(bind=engine)
 
 # Initialize app
 app = FastAPI()
@@ -16,3 +17,4 @@ def read_root():
 
 # Include device routes
 app.include_router(device.router)
+#app.include_router(link.router)
