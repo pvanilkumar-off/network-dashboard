@@ -9,5 +9,10 @@ Base.metadata.create_all(bind=engine)
 # Initialize app
 app = FastAPI()
 
+@app.get("/")
+def read_root():
+    return {"message": "Welcome to Network Dashboard API"}
+
+
 # Include device routes
 app.include_router(device.router)
