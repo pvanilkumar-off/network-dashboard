@@ -29,3 +29,14 @@ def delete_device(device_id: int, db: Session = Depends(get_db)):
     db.delete(device)
     db.commit()
     return {"message": f"Device {device_id} deleted successfully"}
+
+@router.put("/devices/{device_id}", response_model=DeviceOut)
+def update_device(device_id: int, updated: DeviceCreate, db: Session = Depends(get_db)):
+    device = get_device(db, device_id)
+    if not device:
+        raise HTTPException(status_code=404, detail="Device not found")
+    for field, value in updated.model_dump().items():
+        setattr(device, field, value)
+    db.commit()
+    db.refresh(device)
+    return device

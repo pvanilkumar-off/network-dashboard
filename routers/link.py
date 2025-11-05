@@ -26,3 +26,15 @@ def delete(link_id: int, db: Session = Depends(get_db)):
     if not delete_link(db, link_id):
         raise HTTPException(status_code=404, detail="Link not found")
     return {"message": "Link deleted"}
+
+@router.put("/links/{link_id}", response_model=LinkOut)
+def update_link(link_id: int, updated: LinkCreate, db: Session = Depends(get_db)):
+    link = get_link(db, link_id)
+    if not link:
+        raise HTTPException(status_code=404, detail="Link not found")
+    for field, value in updated.model_dump().items():
+        setattr(link, field, value)
+    db.commit()
+    db.refresh(link)
+    return link
+
