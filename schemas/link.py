@@ -5,11 +5,8 @@ class LinkCreate(BaseModel):
     url: str
     device_id: int  # e.g., host, switch, router
 
-class LinkOut(BaseModel):
+class LinkOut(LinkCreate):
     id: int
-    name: str
-    url: str
-    device_id: int
 
     class Config:
-        orm_mode = True  # or use from_attributes if you're on Pydantic v2
+        from_attributes = True  # or use from_attributes if you're on Pydantic v2

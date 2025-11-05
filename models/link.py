@@ -11,5 +11,5 @@ class Link(Base):
     url= Column(String, nullable=False)
     device_id= Column(Integer, ForeignKey("devices.id"))
     
-    device=relationship("Devices",back_populates="links")
+    device=relationship("Device",back_populates="links")
 

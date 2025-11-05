@@ -7,6 +7,7 @@ class DeviceCreate(BaseModel):
 
 class DeviceOut(DeviceCreate):
     id: int
-
+    
     class Config:
-        orm_mode = True
+        from_attributes = True
+

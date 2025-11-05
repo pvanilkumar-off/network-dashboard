@@ -21,3 +21,11 @@ def read_one(device_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Device not found")
     return device
 
+@router.delete("/devices/{device_id}")
+def delete_device(device_id: int, db: Session = Depends(get_db)):
+    device = get_device(db, device_id)
+    if not device:
+        raise HTTPException(status_code=404, detail="Device not found")
+    db.delete(device)
+    db.commit()
+    return {"message": f"Device {device_id} deleted successfully"}
